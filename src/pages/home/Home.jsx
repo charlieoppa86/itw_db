@@ -1,32 +1,60 @@
-import Featured from "../../components/featured/Featured";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Widget from "../../components/widget/Widget";
-import Chart from "../../components/chart/Chart";
-import Chart2 from "../../components/chart2/Chart2";
-import MainChart from "../../components/mainchart/Mainchart";
-import "./home.scss";
+import Featured from '../../components/featured/Featured';
+import Navbar from '../../components/navbar/Navbar';
+import Sidebar from '../../components/sidebar/Sidebar';
+import Widget from '../../components/widget/Widget';
+import Chart from '../../components/chart/Chart';
+import Chart2 from '../../components/chart2/Chart2';
+import MainChart from '../../components/mainchart/Mainchart';
+import './home.scss';
+import { useEffect, useState } from 'react';
+import { getLedgersSummary } from '../../api';
+import useToken from '../../store/token';
+
+function getWeekFromDate(date) {
+    const oneJan = new Date(date.getFullYear(),0,1);
+    const numberOfDays = Math.floor((date.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000));
+
+    return Math.ceil(( date.getDay() + 1 + numberOfDays) / 7);
+}
 
 const Home = () => {
+  const { token } = useToken();
+  const [weeklyData, setWeeklyData] = useState({});
+  const [lastWeekData, setLastWeekData] = useState({});
+  const [last2WeekData, setLast2WeekData] = useState({});
+
+  useEffect(()=>{
+    const date = new Date();
+    const year = date.getFullYear();
+    const lwNumber = getWeekFromDate(date);
+    
+    getLedgersSummary(token, year).then(raw => {
+      setWeeklyData(raw);
+      const lwd = raw.find(e=> e.week === lwNumber);
+      if(lwd) setLastWeekData(lwd);
+      const l2wd = raw.find(e=> e.week === lwNumber - 1);
+      if(l2wd) setLast2WeekData(l2wd);
+    });
+  }, [token]);
   return (
     <div className='home'>
         <Sidebar />
-        <div className="homeContainer">
+        <div className='homeContainer'>
             <Navbar />
-            <div className="widgets">
-                <Widget type="총매출" />
-                <Widget type="객단가" />
-                <Widget type="비급여율" />
-                <Widget type="방문자수" />
-                <Widget type="재방문율" />    
+            <div className='widgets'>
+                <Widget type='총매출' value={lastWeekData.sales} percentage={(lastWeekData.sales - last2WeekData.sales)/last2WeekData.sales * 100}/>
+                <Widget type='객단가' value={lastWeekData.salesPerUser} percentage={(lastWeekData.salesPerUser - last2WeekData.salesPerUser)/last2WeekData.salesPerUser * 100}/>
+                <Widget type='비급여율' value={lastWeekData.nonBenefitRate} percentage={(lastWeekData.nonBenefitRate - last2WeekData.nonBenefitRate)/last2WeekData.nonBenefitRate * 100}/>
+                <Widget type='방문자수' value={lastWeekData.visitors} percentage={(lastWeekData.visitors - last2WeekData.visitors)/last2WeekData.visitors * 100}/>
+                <Widget type='재방문율' value={lastWeekData.revisitRate} percentage={(lastWeekData.revisitRate - last2WeekData.revisitRate)/last2WeekData.revisitRate * 100}/>    
             </div> 
-            <div className="maincharts">  
-                <MainChart />
+            <div className='maincharts'>  
+                <MainChart weeklyData={weeklyData} />
                 <Featured /> 
             </div>
-            <div className="subcharts"> 
-                <Chart />
-                <Chart2 />    
+            <div className='subcharts'> 
+                <Chart  weeklyData={weeklyData}/>
+                <Chart2  weeklyData={weeklyData}/>    
             </div>
         </div>
     </div>

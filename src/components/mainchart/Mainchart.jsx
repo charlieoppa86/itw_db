@@ -1,5 +1,4 @@
 import './mainchart.scss';
-import { weeklyData } from '../../dataSource';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   ComposedChart,
@@ -13,7 +12,8 @@ import {
   YAxis,
 } from 'recharts';
 
-export default function MainChart() {
+export default function MainChart({weeklyData}) {
+  console.log(weeklyData);
   return (
     <div className="mainchart">
         <div className="top">
@@ -27,13 +27,13 @@ export default function MainChart() {
           data={weeklyData}
         >
           <CartesianGrid stroke="#f5f5f5" className='chartGrid'/>
-          <XAxis dataKey="name" scale="band"/>
+          <XAxis dataKey="week" scale="band"/>
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="총매출" barSize={40} fill="rgb(14, 77, 161)" />
-          <Line type="monotone" dataKey="비급여율" stroke="red" />
-          <Line type="monotone" dataKey="객단가" stroke="gray" />
+          <Bar dataKey="sales" barSize={40} fill="rgb(14, 77, 161)" />
+          <Line type="monotone" dataKey="nonBenefitRate" stroke="red" />
+          <Line type="monotone" dataKey="salesPerUser" stroke="gray" />
         </ComposedChart>
       </ResponsiveContainer>
       

@@ -2,16 +2,20 @@ import Home from "./pages/home/Home";
 import Admin from "./pages/admin/Admin";
 import Login from "./pages/login/Login";
 import Analysis from "./pages/analysis/Analysis";
-import './app.css';
+import './App.css';
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
-
-
+import useToken from "./store/token";
 
 function App() {
+  const { token, setToken } = useToken();
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
     <div className='App'>
       <BrowserRouter>
@@ -24,9 +28,6 @@ function App() {
           </Route>
           <Route path='/admin'>
             <Route index element={<Admin />} />
-          </Route>
-          <Route path='/login'>
-            <Route index element={<Login />} />
           </Route>
         </Routes>
       </BrowserRouter>
