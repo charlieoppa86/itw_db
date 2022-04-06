@@ -1,9 +1,7 @@
 import './chart2.scss';
-import { weeklyData } from '../../dataSource';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-export default function Chart2() {
+export default function Chart2({weeklyData}) {
   return (
     <div className="chart2">
         <div className="top">
@@ -21,8 +19,8 @@ export default function Chart2() {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="신규객단가" stroke="brown" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="재진객단가" stroke="navy" />
+          <Line type="monotone" dataKey="newSalesPerUser" stroke="brown" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="revisitSalesPerUser" stroke="navy" />
         </LineChart>
       </ResponsiveContainer>
       

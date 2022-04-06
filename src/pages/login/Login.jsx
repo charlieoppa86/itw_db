@@ -1,10 +1,15 @@
-import './login.scss'
-import { Box, Button, TextField, Container } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import './login.scss';
+import { Box, Button, TextField, Container } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { loginUser } from '../../api';
 
-export default function Login() {
+
+export default function Login({ setToken }) {
   const {register, handleSubmit, formState: {errors}} = useForm()
-  const onSubmit=(data)=>console.log(data)
+  const onSubmit = async (data)=> {
+    const result = await loginUser(data);
+    setToken(result.accessToken);
+  }
 
   return (
     <div className='login'>
@@ -21,19 +26,20 @@ export default function Login() {
                 fullWidth 
                 autoComplete='아이디'
                 autoFocus
-                {...register("아이디", { required: "아이디를 입력해주세요" })}
+                {...register("id", { required: "아이디를 입력해주세요" })}
                 error={!!errors?.아이디}
                 helperText={errors?.아이디 ? errors.아이디.message : null}
               />
           </Box>
           <Box mb={3}>
               <TextField 
+                type="password"
                 variant='outlined' 
                 label='비밀번호' 
                 fullWidth 
                 autoComplete='비밀번호'
                 autoFocus
-                {...register("비밀번호", { required: "비밀번호를 입력해주세요" })}
+                {...register("password", { required: "비밀번호를 입력해주세요" })}
                 error={!!errors?.비밀번호}
                 helperText={errors?.비밀번호 ? errors.비밀번호.message : null}
               />
