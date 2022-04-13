@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Navbar from '../../components/navbar/Navbar';
@@ -15,11 +15,26 @@ export default function Admin() {
   const [visitors, setVisitors] = useState(0);
   const [newVisitors, setNewVisitors] = useState(0);
   const [nonBenefit, setNonBenefit] = useState(0);
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    if(!init) {
+      getLedger(token, getFormatDate(new Date()))
+          .then(res => {
+            setSales(res.sales);
+            setNewSales(res.newSales);
+            setVisitors(res.visitors);
+            setNewVisitors(res.newVisitors);
+            setNonBenefit(res.nonBenefit);
+          })
+    }
+    setInit(true);
+  });
 
   function dateChanged(changed) {
     getLedger(token, getFormatDate(changed))
       .then(res => {
-        setDate(res.date);
+        setDate(changed);
         setSales(res.sales);
         setNewSales(res.newSales);
         setVisitors(res.visitors);
@@ -38,7 +53,7 @@ export default function Admin() {
   }
   function save() {
     if(sales && newSales && visitors && newVisitors && nonBenefit) {
-      upsertLedger(token, {date: getFormatDate(date),sales: sales, newSales: newSales, visitors: visitors, newVisitors: newVisitors});
+      upsertLedger(token, {date: getFormatDate(date),sales: sales, newSales: newSales, visitors: visitors, newVisitors: newVisitors, nonBenefit: nonBenefit});
     } else {
       alert('Field is empty');
       return;
@@ -54,14 +69,14 @@ export default function Admin() {
             </div>
             <div className="bottom">
                 <div className="left">
-                    <Calendar onChange={dateChanged} value={new Date()}/>
+                    <Calendar onChange={dateChanged} value={date}/>
 
                 </div>
                 <div className="right">
                     <form>
                         <div className='formInput'>      
                             <label>총매출</label>
-                            <input type={"text"} value={newSales || ''} placeholder='단위: 십 만원' onChange={e=>setSales(e.target.value)}/>
+                            <input type={"text"} value={sales || ''} placeholder='단위: 십 만원' onChange={e=>setSales(e.target.value)}/>
                         </div>
                         <div className='formInput'>
                             <label>신규방문자매출</label>

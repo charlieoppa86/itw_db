@@ -1,5 +1,5 @@
 export async function loginUser(credentials) {
-  return fetch('http://localhost:8000/v1/users/login', {
+  return fetch(`http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/users/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -11,8 +11,7 @@ export async function loginUser(credentials) {
 
 
 export async function upsertLedger(token, ledger) {
-  console.log(token, ledger);
-  return fetch('http://localhost:8000/v1/ledgers', {
+  return fetch(`http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/ledgers`, {
     method: 'POST',
     headers: {
       'X-User-Auth-Token': token,
@@ -36,8 +35,7 @@ export async function upsertLedger(token, ledger) {
 }
 
 export async function getSumLedgers(token, year, week) {
-  console.log(year, week);
-  let url = 'http://localhost:8000/v1/ledgers';
+  let url = `http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/ledgers`;
   if (year) {
     url = url + '?year=' + year;
     if (week) {
@@ -67,7 +65,7 @@ export async function getSumLedgers(token, year, week) {
 }
 
 export async function getLedgersSummary(token, year) {
-  let url = 'http://localhost:8000/v1/ledgers/summary';
+  let url = `http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/ledgers/summary`;
   if (year) {
     url = url + '?year=' + year;
   }
@@ -95,7 +93,7 @@ export async function getLedgersSummary(token, year) {
 
 
 export async function getLedger(token, date) {
-  const url = 'http://localhost:8000/v1/ledgers/' + date;
+  const url = `http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/ledgers/` + date;
   return fetch(url, {
     method: 'GET',
     headers: {
