@@ -10,7 +10,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
         <div className="top">
-            <span className="logo">이태원정형외과의원</span>
+            <span className="logo">병원재무관리</span>
         </div>
         <hr />
         <div className="center">
@@ -20,14 +20,6 @@ export default function Sidebar() {
                     <InsertChartIcon className="icon"/>
                     <span>
                         대시보드
-                    </span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to='/analysis'>
-                    <NotesIcon className="icon"/>
-                    <span>
-                        분석
                     </span>
                     </Link>
                 </li>

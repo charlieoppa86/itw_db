@@ -7,7 +7,7 @@ import Chart2 from '../../components/chart2/Chart2';
 import MainChart from '../../components/mainchart/Mainchart';
 import './home.scss';
 import { useEffect, useState } from 'react';
-import { getLedgersSummary } from '../../api';
+import { getMyInfo, getLedgersSummary } from '../../api';
 import useToken from '../../store/token';
 
 function getWeekFromDate(date) {
@@ -22,11 +22,18 @@ const Home = () => {
   const [weeklyData, setWeeklyData] = useState({});
   const [lastWeekData, setLastWeekData] = useState({});
   const [last2WeekData, setLast2WeekData] = useState({});
+  const [annualGoal, setAnnualGoal] = useState({});
+  const [totalSales, setTotalSales] = useState({});
 
   useEffect(()=>{
     const date = new Date();
     const year = date.getFullYear();
     const lwNumber = getWeekFromDate(date);
+
+    getMyInfo(token).then(user => {
+      console.log(user);
+      setAnnualGoal(user.group.annualGoal);
+    });
     
     getLedgersSummary(token, year).then(raw => {
       setWeeklyData(raw);
@@ -34,6 +41,12 @@ const Home = () => {
       if(lwd) setLastWeekData(lwd);
       const l2wd = raw.find(e=> e.week === lwNumber - 1);
       if(l2wd) setLast2WeekData(l2wd);
+
+      let sum = 0;
+      raw.forEach(element => {
+        sum = sum + element.sales;
+      });
+      setTotalSales(sum);
     });
   }, [token]);
   return (
@@ -50,7 +63,7 @@ const Home = () => {
             </div> 
             <div className='maincharts'>  
                 <MainChart weeklyData={weeklyData} />
-                <Featured /> 
+                <Featured annualGoal={annualGoal | 0} percent={(totalSales/annualGoal) | 0} /> 
             </div>
             <div className='subcharts'> 
                 <Chart  weeklyData={weeklyData}/>
