@@ -20,8 +20,8 @@ export default function Chart({weeklyData}) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="visitors" stroke="purple" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="revisitRate" stroke="green" />
+          <Line type="monotone" dataKey="visitors" name="방문자" stroke="purple" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="revisitRate" name="재방문율" stroke="green" />
         </LineChart>
       </ResponsiveContainer>
       

@@ -9,6 +9,31 @@ export async function loginUser(credentials) {
   .then(data => data.json());
 }
 
+export async function getMyInfo(token) {
+  let url = `http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/users/me`;
+  console.log(url);
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'X-User-Auth-Token': token,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if(response.status !== 200) {
+      throw new Error(response.status)
+    } else {
+      return response.json()
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    if(err.message === '401') {
+      localStorage.removeItem('token');
+      window.location.reload();
+    }
+  });
+}
 
 export async function upsertLedger(token, ledger) {
   return fetch(`http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/ledgers`, {

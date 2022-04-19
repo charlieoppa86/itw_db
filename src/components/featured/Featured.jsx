@@ -3,7 +3,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 
-export default function Featured() {
+export default function Featured({annualGoal, percent}) {
+  console.log(annualGoal, percent);
   return (
     <div className='featured'>
         <div className="top">
@@ -13,7 +14,7 @@ export default function Featured() {
         <div className="bottom">
             <div className="featuredChart" style={{width: 200, height: 200}}>
                 <CircularProgressbar 
-                value={8.10} text={"8.10%"} strokeWidth={15}
+                value={percent} text={percent+'%'} strokeWidth={15}
                 
                 styles={buildStyles({
                     pathColor: 'rgb(14, 77, 161)',
@@ -22,8 +23,7 @@ export default function Featured() {
                 })}
                 />
             </div>
-            <span className='objective'>연 매출 24억 목표 대비</span>   
-            <span className='period'>2022년 오픈~3월 중순 기준</span>    
+            <span className='objective'>연 매출 {annualGoal} 목표 대비</span> 
         </div>    
     </div>
   )

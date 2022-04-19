@@ -54,6 +54,7 @@ export default function Admin() {
   function save() {
     if(sales && newSales && visitors && newVisitors && nonBenefit) {
       upsertLedger(token, {date: getFormatDate(date),sales: sales, newSales: newSales, visitors: visitors, newVisitors: newVisitors, nonBenefit: nonBenefit});
+      alert('Saved');
     } else {
       alert('Field is empty');
       return;

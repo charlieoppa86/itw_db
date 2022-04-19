@@ -13,7 +13,6 @@ import {
 } from 'recharts';
 
 export default function MainChart({weeklyData}) {
-  console.log(weeklyData);
   return (
     <div className="mainchart">
         <div className="top">
@@ -31,9 +30,9 @@ export default function MainChart({weeklyData}) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="sales" barSize={40} fill="rgb(14, 77, 161)" />
-          <Line type="monotone" dataKey="nonBenefitRate" stroke="red" />
-          <Line type="monotone" dataKey="salesPerUser" stroke="gray" />
+          <Bar dataKey="sales" name="매출" barSize={40} fill="rgb(14, 77, 161)" />
+          <Line type="monotone" dataKey="nonBenefitRate" name="비급여율" stroke="red" />
+          <Line type="monotone" dataKey="salesPerUser" name="객단가" stroke="gray" />
         </ComposedChart>
       </ResponsiveContainer>
       
