@@ -11,7 +11,6 @@ export async function loginUser(credentials) {
 
 export async function getMyInfo(token) {
   let url = `http://${process.env.REACT_APP_API_SERVER}:${process.env.REACT_APP_API_SERVER_PORT}/v1/users/me`;
-  console.log(url);
   return fetch(url, {
     method: 'GET',
     headers: {
