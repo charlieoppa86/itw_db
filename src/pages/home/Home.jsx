@@ -31,7 +31,6 @@ const Home = () => {
     const lwNumber = getWeekFromDate(date);
 
     getMyInfo(token).then(user => {
-      console.log(user);
       setAnnualGoal(user.group.annualGoal);
     });
     
