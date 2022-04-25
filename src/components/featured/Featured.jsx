@@ -3,7 +3,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 
-export default function Featured({annualGoal, percent}) {
+export default function Featured({annualGoal, sales}) {
+    console.log(annualGoal, sales);
   return (
     <div className='featured'>
         <div className="top">
@@ -13,7 +14,7 @@ export default function Featured({annualGoal, percent}) {
         <div className="bottom">
             <div className="featuredChart" style={{width: 200, height: 200}}>
                 <CircularProgressbar 
-                value={percent} text={percent+'%'} strokeWidth={15}
+                value={sales / annualGoal} text={(sales / annualGoal)+'%'} strokeWidth={15}
                 
                 styles={buildStyles({
                     pathColor: 'rgb(14, 77, 161)',

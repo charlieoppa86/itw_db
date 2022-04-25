@@ -35,6 +35,11 @@ const Home = () => {
     });
     
     getLedgersSummary(token, year).then(raw => {
+      console.log(raw);
+      const wd = raw.forEach(element => {
+        element.nonBenefitRate = element.nonBenefitRate * 100;
+        element.revisitRate = element.revisitRate * 100;
+      });
       setWeeklyData(raw);
       const lwd = raw.find(e=> e.week === lwNumber);
       if(lwd) setLastWeekData(lwd);
@@ -62,7 +67,7 @@ const Home = () => {
             </div> 
             <div className='maincharts'>  
                 <MainChart weeklyData={weeklyData} />
-                <Featured annualGoal={annualGoal | 0} percent={(totalSales/annualGoal) | 0} /> 
+                <Featured annualGoal={annualGoal | 0} sales={totalSales | 0} /> 
             </div>
             <div className='subcharts'> 
                 <Chart  weeklyData={weeklyData}/>

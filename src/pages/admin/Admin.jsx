@@ -81,7 +81,7 @@ export default function Admin() {
                         </div>
                         <div className='formInput'>
                             <label>신규방문자매출</label>
-                            <input type={"text"} value={newSales || ''} placeholder='단위: 천 원' onChange={e=>setNewSales(e.target.value)}/>
+                            <input type={"text"} value={newSales || ''} placeholder='단위: 십만 원' onChange={e=>setNewSales(e.target.value)}/>
                         </div>
                         <div className='formInput'>
                             <label>총방문자수</label>
@@ -93,7 +93,7 @@ export default function Admin() {
                         </div>
                         <div className='formInput'>
                             <label>비급여매출</label>
-                            <input type={"text"} value={nonBenefit || ''} placeholder='단위: 천 원' onChange={e=>setNonBenefit(e.target.value)}/>
+                            <input type={"text"} value={nonBenefit || ''} placeholder='단위: 십만 원' onChange={e=>setNonBenefit(e.target.value)}/>
                         </div>
                         
                     </form>
