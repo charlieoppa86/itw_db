@@ -4,7 +4,6 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 
 export default function Featured({annualGoal, sales}) {
-    console.log(annualGoal, sales);
   return (
     <div className='featured'>
         <div className="top">

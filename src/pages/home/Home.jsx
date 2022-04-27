@@ -35,7 +35,6 @@ const Home = () => {
     });
     
     getLedgersSummary(token, year).then(raw => {
-      console.log(raw);
       const wd = raw.forEach(element => {
         element.nonBenefitRate = element.nonBenefitRate * 100;
         element.revisitRate = element.revisitRate * 100;
@@ -43,8 +42,32 @@ const Home = () => {
       setWeeklyData(raw);
       const lwd = raw.find(e=> e.week === lwNumber);
       if(lwd) setLastWeekData(lwd);
+      else {
+        setLastWeekData({
+          newSalesPerUser: 0,
+          nonBenefitRate: 0,
+          revisitRate: 0,
+          revisitSalesPerUser: 0,
+          sales: 0,
+          salesPerUser: 0,
+          visitors: 0,
+          week: lwNumber,
+        });
+      }
       const l2wd = raw.find(e=> e.week === lwNumber - 1);
       if(l2wd) setLast2WeekData(l2wd);
+      else {
+        setLast2WeekData({
+          newSalesPerUser: 0,
+          nonBenefitRate: 0,
+          revisitRate: 0,
+          revisitSalesPerUser: 0,
+          sales: 0,
+          salesPerUser: 0,
+          visitors: 0,
+          week: lwNumber - 1,
+        });
+      }
 
       let sum = 0;
       raw.forEach(element => {
