@@ -9,6 +9,7 @@ import './home.scss';
 import { useEffect, useState } from 'react';
 import { getMyInfo, getLedgersSummary } from '../../api';
 import useToken from '../../store/token';
+import moment from 'moment';
 
 function getWeekFromDate(date) {
     const oneJan = new Date(date.getFullYear(),0,1);
@@ -26,9 +27,9 @@ const Home = () => {
   const [totalSales, setTotalSales] = useState({});
 
   useEffect(()=>{
-    const date = new Date();
-    const year = date.getFullYear();
-    const lwNumber = getWeekFromDate(date);
+    const date = moment();
+    const year = date.year();
+    const lwNumber = date.week() - 1;
 
     getMyInfo(token).then(user => {
       setAnnualGoal(user.group.annualGoal);
